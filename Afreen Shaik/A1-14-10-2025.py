@@ -6,17 +6,13 @@ for i in list:
 print(product)
 
 
-# In[6]:
-
-
+#Reverse Order
 for i in range(10,0,-1):
     print(i)
 
 
-# In[18]:
 
-
-#largest number
+#largest number in a list
 nums=[3,9,1,6,2,8]
 largest=0
 for num in nums:
@@ -25,7 +21,6 @@ for num in nums:
 print(largest)
 
 
-# In[14]:
 
 
 #printing uppercase letters
@@ -35,7 +30,6 @@ for i in n:
         print(i)
 
 
-# In[89]:
 
 
 #first Occurance
@@ -48,9 +42,8 @@ while i<len(n):
     i+=1
 
 
-# In[24]:
 
-
+#Print until -ve Num
 n=[1, 4, 6, 8, 10, -3, 5, 7]
 index=0
 while index<len(n) and n[index]>=0:
@@ -58,9 +51,7 @@ while index<len(n) and n[index]>=0:
     index+=1
 
 
-# In[25]:
-
-
+#if even then break
 for i in range(1,11):
     if i%2==0:
         print(f"EVen num {i} found")
@@ -69,9 +60,7 @@ else:
     print("No even num found")
 
 
-# In[30]:
-
-
+#pattern (inverted Right angle triangle)
 n=5
 for i in range(n,0,-1):
     for j in range(i):
@@ -79,9 +68,8 @@ for i in range(n,0,-1):
     print()
 
 
-# In[38]:
 
-
+#Hallow Pattern
 n=5
 for i in range(1,n+1):
     for j in range(1,n+1):
@@ -92,11 +80,8 @@ for i in range(1,n+1):
     print()
 
 
-# In[82]:
-
 
 #Employee Management using Inheritence 
-
 class Employee:
     def __init__(self, emp_id, name, salary):
         self.emp_id=emp_id
