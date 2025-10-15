@@ -17,7 +17,6 @@ def read_last_n_lines(filename, n):
         lines = f.readlines()
         return lines[-n:]
 
-# Example usage
 filename = 'assignment.txt'
 n = 5
 last_lines = read_last_n_lines(filename, n)
