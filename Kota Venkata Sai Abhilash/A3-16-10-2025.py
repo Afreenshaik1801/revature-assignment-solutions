@@ -36,13 +36,13 @@ data = {
 df = pd.DataFrame(data)
 
 #Basic Data Inspection
-print("📘 First 5 Rows of Data:")
+print(" First 5 Rows of Data:")
 print(df.head())
 
-print("\n📋 Dataset Information:")
+print("\n Dataset Information:")
 print(df.info())
 
-print("\n📊 Summary Statistics:")
+print("\n Summary Statistics:")
 print(df.describe())
 
 df['Average_Score'] = df[['Math_Score', 'Reading_Score', 'Writing_Score']].mean(axis=1)
