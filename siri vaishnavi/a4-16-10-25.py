@@ -1,11 +1,29 @@
-import numpy as np
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[3]:
+
+
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# 1️ Generate Synthetic Data
-np.random.seed(42)  
+
+# In[4]:
+
+
+sns.set(style="whitegrid")
+
+
+# In[5]:
+
+
 num_students = 200
+
+
+# In[6]:
+
 
 data = {
     'Student_ID': range(1, num_students + 1),
@@ -22,55 +40,80 @@ data = {
 
 df = pd.DataFrame(data)
 
-# Calculate Average Score
+
+# In[7]:
+
+
 df['Average_Score'] = df[['Math_Score', 'Reading_Score', 'Writing_Score']].mean(axis=1)
 
-# 2️ Basic Data Inspection
-print("=== Data Overview ===")
-print(df.head(), "\n")
 
-print("=== Basic Info ===")
-print(df.info(), "\n")
+# In[8]:
 
-print("=== Summary Statistics ===")
-print(df.describe(), "\n")
 
-print("=== Missing Values ===")
-print(df.isnull().sum(), "\n")
+print(" First 5 Rows of Data:")
+print(df.head())
 
-# Set Seaborn style
-sns.set(style='whitegrid', palette='Set2')
 
-# 3️ Visualization: Study Hours vs Average Score
+# In[9]:
+
+
+print("Dataset Info:")
+print(df.info())
+
+
+# In[10]:
+
+
+print("Summary Statistics:")
+print(df.describe())
+
+
+# In[11]:
+
+
 plt.figure(figsize=(8, 5))
-sns.scatterplot(x='Study_Hours', y='Average_Score', hue='Gender', data=df, s=60, alpha=0.8)
+sns.scatterplot(data=df, x='Study_Hours', y='Average_Score', hue='Gender')
 plt.title('Study Hours vs Average Score')
-plt.xlabel('Study Hours (per day)')
+plt.xlabel('Study Hours per Day')
 plt.ylabel('Average Score')
-plt.legend(title='Gender')
 plt.show()
 
-# 4️ Visualization: Attendance vs Average Score
+
+# In[12]:
+
+
 plt.figure(figsize=(8, 5))
-sns.scatterplot(x='Attendance_%', y='Average_Score', hue='Sports_Participation', data=df, s=60, alpha=0.8)
+sns.scatterplot(data=df, x='Attendance_%', y='Average_Score', hue='Sports_Participation')
 plt.title('Attendance vs Average Score')
-plt.xlabel('Attendance (%)')
+plt.xlabel('Attendance Percentage')
 plt.ylabel('Average Score')
-plt.legend(title='Sports Participation')
 plt.show()
 
-# 5️ Visualization: Average Score by Parental Education
+
+# In[13]:
+
+
+plt.figure(figsize=(6, 5))
+sns.boxplot(data=df, x='Gender', y='Average_Score')
+plt.title('Average Performance by Gender')
+plt.xlabel('Gender')
+plt.ylabel('Average Score')
+plt.show()
+
+
+# In[14]:
+
+
 plt.figure(figsize=(8, 5))
-sns.barplot(x='Parental_Education', y='Average_Score', data=df, ci=None, palette='pastel')
+sns.barplot(data=df, x='Parental_Education', y='Average_Score', estimator=np.mean, ci=None)
 plt.title('Average Score by Parental Education Level')
 plt.xlabel('Parental Education Level')
 plt.ylabel('Average Score')
 plt.show()
 
-# 6️ Visualization: Average Performance by Gender
-plt.figure(figsize=(7, 5))
-sns.boxplot(x='Gender', y='Average_Score', data=df, palette='Set3')
-plt.title('Average Performance by Gender')
-plt.xlabel('Gender')
-plt.ylabel('Average Score')
-plt.show()
+
+# In[ ]:
+
+
+
+
