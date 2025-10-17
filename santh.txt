@@ -1,5 +1,0 @@
-1 hello
-2 world
-3 snowflake
-4 python
-5  training 
