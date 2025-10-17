@@ -3,8 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# 1️⃣ Generate Synthetic Data
-np.random.seed(42)  # for reproducibility
+# 1️ Generate Synthetic Data
+np.random.seed(42)  
 num_students = 200
 
 data = {
@@ -25,7 +25,7 @@ df = pd.DataFrame(data)
 # Calculate Average Score
 df['Average_Score'] = df[['Math_Score', 'Reading_Score', 'Writing_Score']].mean(axis=1)
 
-# 2️⃣ Basic Data Inspection
+# 2️ Basic Data Inspection
 print("=== Data Overview ===")
 print(df.head(), "\n")
 
@@ -41,7 +41,7 @@ print(df.isnull().sum(), "\n")
 # Set Seaborn style
 sns.set(style='whitegrid', palette='Set2')
 
-# 3️⃣ Visualization: Study Hours vs Average Score
+# 3️ Visualization: Study Hours vs Average Score
 plt.figure(figsize=(8, 5))
 sns.scatterplot(x='Study_Hours', y='Average_Score', hue='Gender', data=df, s=60, alpha=0.8)
 plt.title('Study Hours vs Average Score')
@@ -50,7 +50,7 @@ plt.ylabel('Average Score')
 plt.legend(title='Gender')
 plt.show()
 
-# 4️⃣ Visualization: Attendance vs Average Score
+# 4️ Visualization: Attendance vs Average Score
 plt.figure(figsize=(8, 5))
 sns.scatterplot(x='Attendance_%', y='Average_Score', hue='Sports_Participation', data=df, s=60, alpha=0.8)
 plt.title('Attendance vs Average Score')
@@ -59,7 +59,7 @@ plt.ylabel('Average Score')
 plt.legend(title='Sports Participation')
 plt.show()
 
-# 5️⃣ Visualization: Average Score by Parental Education
+# 5️ Visualization: Average Score by Parental Education
 plt.figure(figsize=(8, 5))
 sns.barplot(x='Parental_Education', y='Average_Score', data=df, ci=None, palette='pastel')
 plt.title('Average Score by Parental Education Level')
@@ -67,7 +67,7 @@ plt.xlabel('Parental Education Level')
 plt.ylabel('Average Score')
 plt.show()
 
-# 6️⃣ Visualization: Average Performance by Gender
+# 6️ Visualization: Average Performance by Gender
 plt.figure(figsize=(7, 5))
 sns.boxplot(x='Gender', y='Average_Score', data=df, palette='Set3')
 plt.title('Average Performance by Gender')
