@@ -5,7 +5,7 @@
 
 
 # Install All the Requirements
-pip install pandas numpy matplotlib seaborn
+#pip install pandas numpy matplotlib seaborn
 
 
 # In[2]:
