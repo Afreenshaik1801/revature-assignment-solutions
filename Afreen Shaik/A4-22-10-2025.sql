@@ -195,9 +195,7 @@ WHERE Associate_Id = 'A003'
   
 BEGIN;
 
-INSERT INTO Login_Details (User_Id, User_Password) VALUES
-('U001', 'Admin1@123'),
-('U002', 'Admin2@123');
+INSERT INTO Login_Details (User_Id, User_Password) VALUES('U001', 'Admin1@123'),('U002', 'Admin2@123');
 
 ROLLBACK;
 
