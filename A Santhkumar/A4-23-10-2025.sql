@@ -191,7 +191,7 @@ INSERT INTO associate_status (Associate_ID, Module_ID, Batch_ID, Trainer_ID, Sta
 ('A006','ANDRD4','B009','F005','2011-08-01','2011-08-20');
 
 
-update Trainer_Info set Trainer_Password = 'nn4@123' where Trainer_Id='F004';
+update Trainer_Info set Trainer_Password = 'santh@1234' where Trainer_Id='F004';
 
 delete from associate_Status where Associate_id = 'A003';
 
