@@ -168,7 +168,7 @@ INSERT INTO Physician VALUES(3,'Christopher Turk','Surgical Attending Physician'
 INSERT INTO Physician VALUES(4,'Percival Cox','Senior Attending Physician',444444444);
 INSERT INTO Physician VALUES(5,'Bob Kelso','Head Chief of Medicine',555555555);
 INSERT INTO Physician VALUES(6,'Todd Quinlan','Surgical Attending Physician',666666666);
-INSERT INTO Physician VALUES(7,'John Wen','Surgical Attending Physician',777777777);
+INSERT intogi Physician VALUES(7,'John Wen','Surgical Attending Physician',777777777);
 INSERT INTO Physician VALUES(8,'Keith Dudemeister','MD Resident',888888888);
 INSERT INTO Physician VALUES(9,'Molly Clock','Attending Psychiatrist',999999999);
 
