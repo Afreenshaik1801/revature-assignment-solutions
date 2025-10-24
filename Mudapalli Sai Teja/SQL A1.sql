@@ -200,11 +200,10 @@ where
 -- Begin transaction & insert below to records into Login_Details 'U001' Admin1@123	'U002' Admin2@123
 -- Perform rollback operation & verify whether any records are inserted in table or not
 begin; 
-insert into Login_Details (User_Id, Password) values ('U001', 'Admin1@123');
-insert into Login_Details (User_Id, Password) values ('U002', 'Admin2@123');
-SELECT 'Before Rollback (Temporary State)' AS Status, COUNT(*) FROM Login_Details;
+insert into Login_Details (User_Id, Password) values ('U001', 'Admin1@123'),('U002', 'Admin2@123');
+
 ROLLBACK;
-SELECT 'After Rollback (Final State)' AS Status, COUNT(*) FROM Login_Details;
+
 SELECT * FROM Login_Details;
 
 
