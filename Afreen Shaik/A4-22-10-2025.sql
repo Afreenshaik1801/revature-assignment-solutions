@@ -200,3 +200,4 @@ INSERT INTO Login_Details (User_Id, User_Password) VALUES('U001', 'Admin1@123'),
 ROLLBACK;
 
 SELECT * FROM Login_Details;
+
