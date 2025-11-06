@@ -1,19 +1,22 @@
+DROP database IF EXISTS sql2;
+create database sql2;
+use sql2;
 DROP TABLE IF EXISTS Physician;
 CREATE TABLE Physician (
-  EmployeeID INTEGER NOT NULL,
-  Name VARCHAR(30) NOT NULL,
-  Position VARCHAR(30) NOT NULL,
-  SSN INTEGER NOT NULL,
-  CONSTRAINT pk_physician PRIMARY KEY(EmployeeID)
+EmployeeID INTEGER NOT NULL,
+Name VARCHAR(30) NOT NULL,
+Position VARCHAR(30) NOT NULL,
+SSN INTEGER NOT NULL,
+CONSTRAINT pk_physician PRIMARY KEY(EmployeeID)
 ); 
 
 DROP TABLE IF EXISTS Department;
 CREATE TABLE Department (
-  DepartmentID INTEGER NOT NULL,
-  Name VARCHAR(30) NOT NULL,
-  Head INTEGER NOT NULL,
-  CONSTRAINT pk_Department PRIMARY KEY(DepartmentID),
-  CONSTRAINT fk_Department_Physician_EmployeeID FOREIGN KEY(Head) REFERENCES Physician(EmployeeID)
+DepartmentID INTEGER NOT NULL,
+Name VARCHAR(30) NOT NULL,
+Head INTEGER NOT NULL,
+CONSTRAINT pk_Department PRIMARY KEY(DepartmentID),
+CONSTRAINT fk_Department_Physician_EmployeeID FOREIGN KEY(Head) REFERENCES Physician(EmployeeID)
 );
 
 
@@ -168,7 +171,7 @@ INSERT INTO Physician VALUES(3,'Christopher Turk','Surgical Attending Physician'
 INSERT INTO Physician VALUES(4,'Percival Cox','Senior Attending Physician',444444444);
 INSERT INTO Physician VALUES(5,'Bob Kelso','Head Chief of Medicine',555555555);
 INSERT INTO Physician VALUES(6,'Todd Quinlan','Surgical Attending Physician',666666666);
-INSERT intogi Physician VALUES(7,'John Wen','Surgical Attending Physician',777777777);
+INSERT INTO Physician VALUES(7,'John Wen','Surgical Attending Physician',777777777);
 INSERT INTO Physician VALUES(8,'Keith Dudemeister','MD Resident',888888888);
 INSERT INTO Physician VALUES(9,'Molly Clock','Attending Psychiatrist',999999999);
 
@@ -309,124 +312,125 @@ INSERT INTO Trained_In VALUES(7,5,'2008-01-01','2008-12-31');
 INSERT INTO Trained_In VALUES(7,6,'2008-01-01','2008-12-31');
 INSERT INTO Trained_In VALUES(7,7,'2008-01-01','2008-12-31');
 
-#1
-select * from physician;
-select * from undergoes;
-select p.name from physician p join undergoes u on p.employeeid = u.physician left join trained_in t
-on t.physician = u.physician and t.treatment = u.procedures where t.treatment IS NULL;
+select * from Physician where position = "Surgical Attending Physician";
+select * from physician limit 10000;
+select * from department;
+select * from Affiliated_With;
+select * from Procedures;
+select * from room;
 
-
-#2
-SELECT p.Name AS PhysicianName, pr.Name AS ProcedureName, u.DateUndergoes AS ProcedureDate, 
-pt.Name AS PatientName FROM Physician p
-JOIN Undergoes u ON u.Physician = p.EmployeeID
-JOIN Procedures pr ON pr.Code = u.Procedures
-JOIN Patient pt ON pt.SSN = u.Patient
+SELECT DISTINCT p.Name AS PhysicianName
+FROM Physician p
+JOIN Undergoes u ON p.EmployeeID = u.Physician
 WHERE NOT EXISTS (
-  SELECT *
-  FROM Trained_In t
-  WHERE t.Physician = p.EmployeeID
-    AND t.Treatment = u.Procedures
+SELECT 1 
+FROM Trained_In t
+WHERE t.Physician = p.EmployeeID 
+AND t.Treatment = u.Procedures
 );
 
-
-#3
-SELECT ph.Name
-FROM Physician ph
-JOIN Undergoes u ON u.Physician = ph.EmployeeID
-WHERE EXISTS (
-  SELECT *
-  FROM Trained_In t
-  WHERE t.Physician = ph.EmployeeID
-    AND t.Treatment = u.Procedures
-    AND u.DateUndergoes > t.CertificationExpires
+SELECT p.Name AS PhysicianName,
+pr.Name AS ProcedureName,
+u.DateUndergoes,
+pa.Name AS PatientName
+FROM Undergoes u
+JOIN Physician p ON u.Physician = p.EmployeeID
+JOIN Procedures pr ON u.Procedures = pr.Code
+JOIN Patient pa ON u.Patient = pa.SSN
+WHERE NOT EXISTS (
+SELECT 1 
+FROM Trained_In t
+WHERE t.Physician = p.EmployeeID 
+AND t.Treatment = u.Procedures
 );
 
-#4
-SELECT DISTINCT
-  ph.Name AS PhysicianName,
-  pr.Name AS ProcedureName,
-  u.DateUndergoes AS ProcedureDate,
-  pt.Name AS PatientName,
-  t.CertificationExpires AS CertificationExpiredOn
-FROM Physician ph
-JOIN Undergoes u
-  ON u.Physician = ph.EmployeeID
-JOIN Trained_In t
-  ON t.Physician = ph.EmployeeID
- AND t.Treatment = u.Procedures
-JOIN Procedures pr ON pr.Code = u.Procedures
-JOIN Patient pt     ON pt.SSN = u.Patient
+SELECT DISTINCT p.Name AS PhysicianName
+FROM Physician p
+JOIN Undergoes u ON p.EmployeeID = u.Physician
+JOIN Trained_In t 
+ON t.Physician = p.EmployeeID 
+AND t.Treatment = u.Procedures
 WHERE u.DateUndergoes > t.CertificationExpires;
 
-#5
-SELECT
-  p.Name AS PatientName,
-  doc.Name AS PhysicianName,
-  n.Name AS NurseName,
-  a.Starto,
-  a.Endo,
-  a.ExaminationRoom,
-  pcp.Name AS PCPName
-FROM Appointment a
-JOIN Patient p ON a.Patient = p.SSN
-JOIN Physician doc ON a.Physician = doc.EmployeeID
-JOIN Physician pcp ON p.PCP = pcp.EmployeeID
-LEFT JOIN Nurse n ON a.PrepNurse = n.EmployeeID
-WHERE a.Physician <> p.PCP;
-
-#6
-SELECT u.*
+SELECT p.Name AS PhysicianName,
+pr.Name AS ProcedureName,
+u.DateUndergoes,
+pa.Name AS PatientName,
+t.CertificationExpires
 FROM Undergoes u
+JOIN Physician p ON u.Physician = p.EmployeeID
+JOIN Procedures pr ON u.Procedures = pr.Code
+JOIN Patient pa ON u.Patient = pa.SSN
+JOIN Trained_In t 
+ON t.Physician = p.EmployeeID 
+AND t.Treatment = u.Procedures
+WHERE u.DateUndergoes > t.CertificationExpires;
+
+SELECT pa.Name AS PatientName,
+ph.Name AS AppointmentPhysician,
+n.Name AS NurseName,
+a.Starto AS StartTime,
+a.Endo AS EndTime,
+a.ExaminationRoom,
+pcp.Name AS PrimaryCarePhysician
+FROM Appointment a
+JOIN Patient pa ON a.Patient = pa.SSN
+JOIN Physician ph ON a.Physician = ph.EmployeeID
+LEFT JOIN Nurse n ON a.PrepNurse = n.EmployeeID
+JOIN Physician pcp ON pa.PCP = pcp.EmployeeID
+WHERE a.Physician <> pa.PCP;
+
+SELECT * FROM Undergoes u
 JOIN Stay s ON u.Stay = s.StayID
 WHERE u.Patient <> s.Patient;
 
-#7
-SELECT n.Name
-FROM On_Call oc
-JOIN Room r ON oc.BlockFloor = r.BlockFloor AND oc.BlockCode  = r.BlockCode
-JOIN Nurse n ON oc.Nurse = n.EmployeeID
+SELECT DISTINCT n.Name AS NurseName
+FROM On_Call o
+JOIN Nurse n ON o.Nurse = n.EmployeeID
+JOIN Room r 
+ON o.BlockFloor = r.BlockFloor 
+AND o.BlockCode = r.BlockCode
 WHERE r.RoomNumber = 123;
 
-#8
-SELECT
-  ExaminationRoom,
-  COUNT(*) AS AppointmentCount
+SELECT 
+ExaminationRoom,
+COUNT(*) AS NumberOfAppointments
 FROM Appointment
-GROUP BY ExaminationRoom
-ORDER BY AppointmentCount DESC;
+GROUP BY ExaminationRoom;
 
-#9
-SELECT
-  pa.Name AS PatientName,
-  pcp.Name AS PCPName
+SELECT DISTINCT 
+pa.Name AS PatientName,
+pcp.Name AS PrimaryCarePhysician
 FROM Patient pa
 JOIN Physician pcp ON pa.PCP = pcp.EmployeeID
-WHERE EXISTS (
-    -- PCP prescribed medication to the patient
-    SELECT *
-    FROM Prescribes ps
-    WHERE ps.Patient = pa.SSN
-      AND ps.Physician = pa.PCP
+WHERE 
+    -- Condition 1: medication prescribed by their PCP
+EXISTS (
+SELECT 1 
+FROM Prescribes pr
+WHERE pr.Patient = pa.SSN 
+AND pr.Physician = pa.PCP
 )
+    
+    -- Condition 2: procedure > $5000
 AND EXISTS (
-    -- patient underwent a procedure with cost > 5000
-    SELECT *
-    FROM Undergoes u
-    JOIN Procedures pr ON u.Procedures = pr.Code
-    WHERE u.Patient = pa.SSN
-      AND pr.Cost > 5000
+SELECT 1
+FROM Undergoes u
+JOIN Procedures prc ON u.Procedures = prc.Code
+WHERE u.Patient = pa.SSN 
+AND prc.Cost > 5000
 )
+    
 AND (
-    -- at least two appointments where the prep nurse was a registered nurse
-    SELECT COUNT(*)
-    FROM Appointment a
-    JOIN Nurse n ON a.PrepNurse = n.EmployeeID
-    WHERE a.Patient = pa.SSN
-      AND a.PrepNurse IS NOT NULL
-      AND n.Registered = 1
-) >= 2
+SELECT COUNT(*)
+FROM Appointment a
+JOIN Nurse n ON a.PrepNurse = n.EmployeeID
+WHERE a.Patient = pa.SSN AND n.Registered = 1
+)>= 2
+    
+    
 AND NOT EXISTS (
-    -- PCP is not the head of any department
-    SELECT * FROM Department d WHERE d.Head = pa.PCP
+SELECT 1
+FROM Department d
+WHERE d.Head = pa.PCP
 );

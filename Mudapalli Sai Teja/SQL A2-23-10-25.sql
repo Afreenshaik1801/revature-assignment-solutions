@@ -1,4 +1,8 @@
-DROP TABLE IF EXISTS Physician;
+create database PHYSICIAN;
+use PHYSICIAN;
+
+-- Creating Tables
+
 CREATE TABLE Physician (
   EmployeeID INTEGER NOT NULL,
   Name VARCHAR(30) NOT NULL,
@@ -7,7 +11,6 @@ CREATE TABLE Physician (
   CONSTRAINT pk_physician PRIMARY KEY(EmployeeID)
 ); 
 
-DROP TABLE IF EXISTS Department;
 CREATE TABLE Department (
   DepartmentID INTEGER NOT NULL,
   Name VARCHAR(30) NOT NULL,
@@ -17,7 +20,6 @@ CREATE TABLE Department (
 );
 
 
-DROP TABLE IF EXISTS Affiliated_With;
 CREATE TABLE Affiliated_With (
   Physician INTEGER NOT NULL,
   Department INTEGER NOT NULL,
@@ -27,14 +29,13 @@ CREATE TABLE Affiliated_With (
   PRIMARY KEY(Physician, Department)
 );
 
-DROP TABLE IF EXISTS Procedures;
+
 CREATE TABLE Procedures (
   Code INTEGER PRIMARY KEY NOT NULL,
   Name VARCHAR(30) NOT NULL,
   Cost REAL NOT NULL
 );
 
-DROP TABLE IF EXISTS Trained_In;
 CREATE TABLE Trained_In (
   Physician INTEGER NOT NULL,
   Treatment INTEGER NOT NULL,
@@ -45,7 +46,6 @@ CREATE TABLE Trained_In (
   PRIMARY KEY(Physician, Treatment)
 );
 
-DROP TABLE IF EXISTS Patient;
 CREATE TABLE Patient (
   SSN INTEGER PRIMARY KEY NOT NULL,
   Name VARCHAR(30) NOT NULL,
@@ -56,7 +56,6 @@ CREATE TABLE Patient (
   CONSTRAINT fk_Patient_Physician_EmployeeID FOREIGN KEY(PCP) REFERENCES Physician(EmployeeID)
 );
 
-DROP TABLE IF EXISTS Nurse;
 CREATE TABLE Nurse (
   EmployeeID INTEGER PRIMARY KEY NOT NULL,
   Name VARCHAR(30) NOT NULL,
@@ -65,7 +64,6 @@ CREATE TABLE Nurse (
   SSN INTEGER NOT NULL
 );
 
-DROP TABLE IF EXISTS Appointment;
 CREATE TABLE Appointment (
   AppointmentID INTEGER PRIMARY KEY NOT NULL,
   Patient INTEGER NOT NULL,    
@@ -79,7 +77,6 @@ CREATE TABLE Appointment (
   CONSTRAINT fk_Appointment_Physician_EmployeeID FOREIGN KEY(Physician) REFERENCES Physician(EmployeeID)
 );
 
-DROP TABLE IF EXISTS Medication;
 CREATE TABLE Medication (
   Code INTEGER PRIMARY KEY NOT NULL,
   Name VARCHAR(30) NOT NULL,
@@ -87,8 +84,6 @@ CREATE TABLE Medication (
   Description VARCHAR(30) NOT NULL
 );
 
-
-DROP TABLE IF EXISTS Prescribes;
 CREATE TABLE Prescribes (
   Physician INTEGER NOT NULL,
   Patient INTEGER NOT NULL, 
@@ -103,14 +98,13 @@ CREATE TABLE Prescribes (
   CONSTRAINT fk_Prescribes_Appointment_AppointmentID FOREIGN KEY(Appointment) REFERENCES Appointment(AppointmentID)
 );
 
-DROP TABLE IF EXISTS Block;
 CREATE TABLE Block (
   BlockFloor INTEGER NOT NULL,
   BlockCode INTEGER NOT NULL,
   PRIMARY KEY(BlockFloor, BlockCode)
 ); 
 
-DROP TABLE IF EXISTS Room;
+
 CREATE TABLE Room (
   RoomNumber INTEGER PRIMARY KEY NOT NULL,
   RoomType VARCHAR(30) NOT NULL,
@@ -120,30 +114,6 @@ CREATE TABLE Room (
   CONSTRAINT fk_Room_Block_PK FOREIGN KEY(BlockFloor, BlockCode) REFERENCES Block(BlockFloor, BlockCode)
 );
 
-DROP TABLE IF EXISTS On_Call;
-CREATE TABLE On_Call (
-  Nurse INTEGER NOT NULL,
-  BlockFloor INTEGER NOT NULL, 
-  BlockCode INTEGER NOT NULL,
-  OnCallStart DATETIME NOT NULL,
-  OnCallEnd DATETIME NOT NULL,
-  PRIMARY KEY(Nurse, BlockFloor, BlockCode, OnCallStart, OnCallEnd),
-  CONSTRAINT fk_OnCall_Nurse_EmployeeID FOREIGN KEY(Nurse) REFERENCES Nurse(EmployeeID),
-  CONSTRAINT fk_OnCall_Block_Floor FOREIGN KEY(BlockFloor, BlockCode) REFERENCES Block(BlockFloor, BlockCode) 
-);
-
-DROP TABLE IF EXISTS Stay;
-CREATE TABLE Stay (
-  StayID INTEGER PRIMARY KEY NOT NULL,
-  Patient INTEGER NOT NULL,
-  Room INTEGER NOT NULL,
-  StayStart DATETIME NOT NULL,
-  StayEnd DATETIME NOT NULL,
-  CONSTRAINT fk_Stay_Patient_SSN FOREIGN KEY(Patient) REFERENCES Patient(SSN),
-  CONSTRAINT fk_Stay_Room_Number FOREIGN KEY(Room) REFERENCES Room(RoomNumber)
-);
-
-DROP TABLE IF EXISTS Undergoes;
 CREATE TABLE Undergoes (
   Patient INTEGER NOT NULL,
   Procedures INTEGER NOT NULL,
@@ -160,15 +130,14 @@ CREATE TABLE Undergoes (
 );
 
 
----------------------  DML -----------------------------
-
+-- Inserting values
 INSERT INTO Physician VALUES(1,'John Dorian','Staff Internist',111111111);
 INSERT INTO Physician VALUES(2,'Elliot Reid','Attending Physician',222222222);
 INSERT INTO Physician VALUES(3,'Christopher Turk','Surgical Attending Physician',333333333);
 INSERT INTO Physician VALUES(4,'Percival Cox','Senior Attending Physician',444444444);
 INSERT INTO Physician VALUES(5,'Bob Kelso','Head Chief of Medicine',555555555);
 INSERT INTO Physician VALUES(6,'Todd Quinlan','Surgical Attending Physician',666666666);
-INSERT intogi Physician VALUES(7,'John Wen','Surgical Attending Physician',777777777);
+INSERT INTO Physician VALUES(7,'John Wen','Surgical Attending Physician',777777777);
 INSERT INTO Physician VALUES(8,'Keith Dudemeister','MD Resident',888888888);
 INSERT INTO Physician VALUES(9,'Molly Clock','Attending Psychiatrist',999999999);
 
@@ -196,14 +165,17 @@ INSERT INTO Procedures VALUES(5,'Obfuscated Dermogastrotomy',4899.0);
 INSERT INTO Procedures VALUES(6,'Reversible Pancreomyoplasty',5600.0);
 INSERT INTO Procedures VALUES(7,'Follicular Demiectomy',25.0);
 
+
 INSERT INTO Patient VALUES(100000001,'John Smith','42 Foobar Lane','555-0256',68476213,1);
 INSERT INTO Patient VALUES(100000002,'Grace Ritchie','37 Snafu Drive','555-0512',36546321,2);
 INSERT INTO Patient VALUES(100000003,'Random J. Patient','101 Omgbbq Street','555-1204',65465421,2);
 INSERT INTO Patient VALUES(100000004,'Dennis Doe','1100 Foobaz Avenue','555-2048',68421879,3);
 
+
 INSERT INTO Nurse VALUES(101,'Carla Espinosa','Head Nurse',1,111111110);
 INSERT INTO Nurse VALUES(102,'Laverne Roberts','Nurse',1,222222220);
 INSERT INTO Nurse VALUES(103,'Paul Flowers','Nurse',0,333333330);
+
 
 INSERT INTO Appointment VALUES(13216584,100000001,101,1,'2008-04-24 10:00','2008-04-24 11:00','A');
 INSERT INTO Appointment VALUES(26548913,100000002,101,2,'2008-04-24 10:00','2008-04-24 11:00','B');
@@ -309,124 +281,102 @@ INSERT INTO Trained_In VALUES(7,5,'2008-01-01','2008-12-31');
 INSERT INTO Trained_In VALUES(7,6,'2008-01-01','2008-12-31');
 INSERT INTO Trained_In VALUES(7,7,'2008-01-01','2008-12-31');
 
-#1
-select * from physician;
-select * from undergoes;
-select p.name from physician p join undergoes u on p.employeeid = u.physician left join trained_in t
-on t.physician = u.physician and t.treatment = u.procedures where t.treatment IS NULL;
+-- 1.	Obtain the names of all physicians that have performed a medical procedure they have never been certified to perform.
+SELECT  n.Name
+FROM Physician AS n
+JOIN Undergoes AS u ON n.EmployeeID = u.Physician
+WHERE NOT EXISTS (
+  SELECT * FROM Trained_In AS t
+  WHERE t.Physician = n.EmployeeID AND t.Treatment = u.Procedures
+);
 
-
-#2
-SELECT p.Name AS PhysicianName, pr.Name AS ProcedureName, u.DateUndergoes AS ProcedureDate, 
-pt.Name AS PatientName FROM Physician p
-JOIN Undergoes u ON u.Physician = p.EmployeeID
-JOIN Procedures pr ON pr.Code = u.Procedures
-JOIN Patient pt ON pt.SSN = u.Patient
+-- 2.	Same as the previous query, but include the following information in the results: Physician name, name of procedure, date when the procedure was carried out, name of the patient the procedure was carried out on.
+SELECT n.Name AS Physician_Name,p.Name AS Procedure_Name,u.DateUndergoes AS Date_Performed,pt.Name AS Patient_Name
+FROM Physician AS n
+JOIN Undergoes AS u ON n.EmployeeID = u.Physician
+JOIN Procedures AS p ON u.Procedures = p.Code
+JOIN Patient AS pt ON u.Patient = pt.SSN
 WHERE NOT EXISTS (
   SELECT *
-  FROM Trained_In t
-  WHERE t.Physician = p.EmployeeID
-    AND t.Treatment = u.Procedures
+  FROM Trained_In AS t
+  WHERE t.Physician = n.EmployeeID AND t.Treatment = u.Procedures
 );
 
+-- 3.	Obtain the names of all physicians that have performed a medical procedure that they are certified to perform, but such that the procedure was done at a date (Undergoes.Date) after the physician's certification expired (Trained_In.CertificationExpires).
+select n.Name
+from Physician as n
+join Undergoes as u on n.EmployeeID = u.Physician
+join Trained_In as t on u.Physician = t.Physician and u.Procedures = t.Treatment
+where u.DateUndergoes > t.CertificationExpires;	
 
-#3
-SELECT ph.Name
-FROM Physician ph
-JOIN Undergoes u ON u.Physician = ph.EmployeeID
-WHERE EXISTS (
-  SELECT *
-  FROM Trained_In t
-  WHERE t.Physician = ph.EmployeeID
-    AND t.Treatment = u.Procedures
-    AND u.DateUndergoes > t.CertificationExpires
-);
+-- 4.	Same as the previous query, but include the following information in the results: Physician name, name of procedure, date when the procedure was carried out, name of the patient the procedure was carried out on, and date when the certification expired.
+select n.Name AS Physician_Name,
+  p.Name as Procedure_Name,
+  u.DateUndergoes as Procedure_Date,
+  pp.Name as Patient_Name,
+  t.CertificationExpires as Certification_Expires_Date
+from Physician as n
+join Undergoes as u on n.EmployeeID = u.Physician
+join Trained_In as t on u.Physician = t.Physician and u.Procedures = t.Treatment
+join Procedures as p on u.Procedures = p.Code
+join Patient as pp on u.Patient = pp.SSN
+where u.DateUndergoes > t.CertificationExpires;
 
-#4
-SELECT DISTINCT
-  ph.Name AS PhysicianName,
-  pr.Name AS ProcedureName,
-  u.DateUndergoes AS ProcedureDate,
-  pt.Name AS PatientName,
-  t.CertificationExpires AS CertificationExpiredOn
-FROM Physician ph
-JOIN Undergoes u
-  ON u.Physician = ph.EmployeeID
-JOIN Trained_In t
-  ON t.Physician = ph.EmployeeID
- AND t.Treatment = u.Procedures
-JOIN Procedures pr ON pr.Code = u.Procedures
-JOIN Patient pt     ON pt.SSN = u.Patient
-WHERE u.DateUndergoes > t.CertificationExpires;
+-- 5.	Obtain the information for appointments where a patient met with a physician other than his/her primary care physician. Show the following information: Patient name, physician name, nurse name (if any), start and end time of appointment, examination room, and the name of the patient's primary care physician.
+select
+  p.name as patient_name,
+  d.name as physician_name,
+  n.name as prep_nurse_name,
+  a.starto as appointment_start,
+  a.endo as appointment_end,
+  a.examinationroom,
+  cp.name as pcp_name
+from patient as p
+join physician as cp on p.pcp = cp.employeeid
+join appointment as a on p.ssn = a.patient
+join physician as d on a.physician = d.employeeid
+left join nurse as n on a.prepnurse = n.employeeid
+where a.physician <> p.pcp;
 
-#5
-SELECT
-  p.Name AS PatientName,
-  doc.Name AS PhysicianName,
-  n.Name AS NurseName,
-  a.Starto,
-  a.Endo,
-  a.ExaminationRoom,
-  pcp.Name AS PCPName
-FROM Appointment a
-JOIN Patient p ON a.Patient = p.SSN
-JOIN Physician doc ON a.Physician = doc.EmployeeID
-JOIN Physician pcp ON p.PCP = pcp.EmployeeID
-LEFT JOIN Nurse n ON a.PrepNurse = n.EmployeeID
-WHERE a.Physician <> p.PCP;
+-- 6.	The Patient field in Undergoes is redundant, since we can obtain it from the Stay table. There are no constraints in force to prevent inconsistencies between these two tables. More specifically, the Undergoes table may include a row where the patient ID does not match the one we would obtain from the Stay table through the Undergoes.Stay foreign key. Select all rows from Undergoes that exhibit this inconsistency.
+select u.*
+from undergoes as u
+join stay as s on u.stay = s.stayid
+where u.patient <> s.patient;
 
-#6
-SELECT u.*
-FROM Undergoes u
-JOIN Stay s ON u.Stay = s.StayID
-WHERE u.Patient <> s.Patient;
+-- 7.	Obtain the names of all the nurses who have ever been on call for room 123.
+select n.name
+from nurse as n
+join on_call as oc on n.employeeid = oc.nurse
+join room as r on oc.blockfloor = r.blockfloor and oc.blockcode = r.blockcode
+where r.roomnumber = 123;
 
-#7
-SELECT n.Name
-FROM On_Call oc
-JOIN Room r ON oc.BlockFloor = r.BlockFloor AND oc.BlockCode  = r.BlockCode
-JOIN Nurse n ON oc.Nurse = n.EmployeeID
-WHERE r.RoomNumber = 123;
+-- 8.	The hospital has several examination rooms where appointments take place. Obtain the number of appointments that have taken place in each examination room.
+select examinationroom, count(appointmentid) as number_of_appointments
+from appointment
+group by examinationroom;
 
-#8
-SELECT
-  ExaminationRoom,
-  COUNT(*) AS AppointmentCount
-FROM Appointment
-GROUP BY ExaminationRoom
-ORDER BY AppointmentCount DESC;
-
-#9
-SELECT
-  pa.Name AS PatientName,
-  pcp.Name AS PCPName
-FROM Patient pa
-JOIN Physician pcp ON pa.PCP = pcp.EmployeeID
-WHERE EXISTS (
-    -- PCP prescribed medication to the patient
-    SELECT *
-    FROM Prescribes ps
-    WHERE ps.Patient = pa.SSN
-      AND ps.Physician = pa.PCP
-)
-AND EXISTS (
-    -- patient underwent a procedure with cost > 5000
-    SELECT *
-    FROM Undergoes u
-    JOIN Procedures pr ON u.Procedures = pr.Code
-    WHERE u.Patient = pa.SSN
-      AND pr.Cost > 5000
-)
-AND (
-    -- at least two appointments where the prep nurse was a registered nurse
-    SELECT COUNT(*)
-    FROM Appointment a
-    JOIN Nurse n ON a.PrepNurse = n.EmployeeID
-    WHERE a.Patient = pa.SSN
-      AND a.PrepNurse IS NOT NULL
-      AND n.Registered = 1
-) >= 2
-AND NOT EXISTS (
-    -- PCP is not the head of any department
-    SELECT * FROM Department d WHERE d.Head = pa.PCP
-);
+-- 9.	tain the names of all patients (also include, for each patient, the name of the patient's primary care physician), such that \emph{all} the following are true:
+select p.name as patient_name, pcp.name as pcp_name
+from patient as p
+join physician as pcp on p.pcp = pcp.employeeid
+where p.ssn in (
+    select patient
+    from prescribes
+    where physician = p.pcp
+  ) and p.ssn in (
+    select distinct u.patient
+    from undergoes as u
+    join procedures as pr on u.procedures = pr.code
+    where pr.cost > 5000
+  ) and p.ssn in (
+    select a.patient
+    from appointment as a
+    join nurse as n on a.prepnurse = n.employeeid
+    where n.registered = 1
+    group by a.patient
+    having count(a.appointmentid) >= 2
+  ) and pcp.employeeid not in (
+    select distinct head
+    from department
+  );

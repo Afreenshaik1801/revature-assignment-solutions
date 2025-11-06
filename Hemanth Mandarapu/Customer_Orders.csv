@@ -1,0 +1,51 @@
+Customer_Id,Customer_Name,Customer_Location,Order_ID,Order_Quantity,Order_Price
+10,Mary Vega DDS,"China, Beijing Shi ",2268,5,16.52
+20,Brandon Myers,"193, Bannerghatta Main Rd ",3082,4,17.27
+30,Margaret Wells,Behrenstraﬂe 42 ,3160,1,3.37
+40,Michael Matthews,Behrenstraﬂe 42 ,1272,5,2.2
+50,Connor Williams,Floreasca Park 43 Soseaua ,9447,1,12.23
+60,Matthew Miles,"Juana Manso 1069,",1587,5,7.39
+70,Catherine Thompson,233 South Wacker Dr ,2834,3,8.31
+80,Nathan Holland,233 South Wacker Dr ,4514,4,2.28
+90,Anthony Sherman,Woodmead North Office Park ,3946,1,13.05
+100,Carolyn Roberts,Woodmead North Office Park ,3174,4,19.48
+110,Johnny Dennis,1391 Tiamiyu Savage St,8018,5,
+120,Michael Barton,One South Place London ,5134,1,20.73
+130,Heidi Boyle,C/ JosÈ Echegaray 6B Las ,5409,5,4.77
+140,George Smith,Montes Urales  470 P3 Col ,4626,3,3.44
+150,Thomas Frazier,Montes Urales 470 P3 Col,4390,1,4.84
+160,David Bailey,First International FCU,9040,5,19.49
+170,Larry Harvey,First International FCU,5649,4,21.98
+180,Christina Cochran,"F-01/02, First Floor Salcon ",7756,1,21.83
+190,Aaron Bruce,205 Lexington ,2857,4,4.72
+200,Anna Smith,https://www.example.com,8170,3,21.48
+210,Andrew Hill,https://www.example.com,2933,3,20.78
+220,Angela Sherman,https://www.example.com,3742,2,10.81
+230,Austin Cain,Level 9 225 St Georges Terrace ,8664,5,19.78
+240,Scott Clark,Level 9 225 St Georges Terrace ,9769,2,17.22
+250,Cindy Smith,Redwood Shores 500 ,9125,3,16.68
+260,Elizabeth Contreras,Redwood Shores 500 ,1486,3,15.77
+270,Robert Simmons,1501 Fourth Avenue ,4707,3,
+280,Ana Brooks,Riverside Corporate Park 4 ,1964,3,9.86
+290,Jason King,Rua Dr. Jose Aureo Bustamant,6828,4,7.64
+300,Andrew Stephens,"B, Aharon Bart St 18",2651,3,24.99
+310,Carol Lynch,2 Chome-5-? Kitaaoyama,1088,1,14.82
+320,Amy Ellis,2 Chome-5-? Kitaaoyama,6841,5,5.97
+330,Kathleen Miranda,Hertogswetering 163,7606,3,19.67
+340,Lynn Smith,"193, Bannerghatta Main Rd",7720,1,22.1
+350,Michelle Rodriguez,Behrenstraﬂe 42 ,9332,3,14.6
+360,Emily Mcmillan,Juana Manso 1069,7106,5,17.38
+370,Gavin Griffin,233 South Wacker Dr. 45th Floor ,3007,5,10.42
+380,Jennifer Friedman,Woodmead North Office Park ,4081,5,17.18
+390,Brittany Hughes,One South Place London EC2M 2RB,7215,1,14.27
+400,Margaret Lopez,Montes Urales # 470 P3 Col,8800,1,21.58
+410,Lori James,First International FCU,2121,1,22.48
+420,Heather Wheeler,"F-01/02, First Floor Salcon ",2187,2,12.43
+430,Susan Glenn,https://www.example.com,9709,4,
+440,Richard Lee,https://www.example.com,9211,5,6.59
+450,Jennifer Barron,Level 9 225 St Georges ,9271,1,7.31
+460,Lauren Freeman,Redwood Shores 500 ,4925,5,12.99
+470,Matthew Perry,Riverside Corporate Park 4 ,4142,2,4.37
+480,William Rasmussen,"B, Aharon Bart St 18",9859,5,10.01
+490,Anthony Jennings,2 Chome-5-? Kitaaoyama,2951,3,22.14
+500,James Nixon,"193, Bannerghatta Main Rd",9086,1,10.32
